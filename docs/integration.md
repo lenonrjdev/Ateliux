@@ -62,10 +62,19 @@ Relatorios:
 
 ```txt
 docs/reports/docker-local-homolog-latest.md
+docs/reports/docker-backend-full-container-latest.md
 docs/reports/ngrok-vercel-homolog-latest.md
 ```
 
-O caminho Docker -> ngrok -> backend foi validado com health, CORS configurado, cookies httpOnly, login cliente/admin e fluxo projeto visivel/invisivel. A validacao completa Vercel -> ngrok depende do dominio real da Vercel configurado em `.env.docker`, variavel `NEXT_PUBLIC_API_BASE_URL` atualizada na Vercel e redeploy.
+O caminho Docker -> ngrok -> backend foi validado com health, CORS configurado, cookies httpOnly e login cliente/admin. Para esta homologacao, o backend nao deve ser iniciado com `npm run start:dev`, `npm run start` ou `nest start` no host; ele roda no container e expõe somente `http://localhost:3054/api`.
+
+Valor atual para Vercel:
+
+```txt
+NEXT_PUBLIC_API_BASE_URL=https://aubrielle-wroth-shae.ngrok-free.dev/api
+```
+
+A validacao completa pelo browser Vercel depende do dominio real da Vercel configurado em `.env.docker`, variavel `NEXT_PUBLIC_API_BASE_URL` atualizada na Vercel e redeploy.
 
 Setup de banco limpo para pre-producao:
 

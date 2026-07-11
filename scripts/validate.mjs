@@ -29,6 +29,7 @@ if (!validModes.has(mode)) {
 const isWindows = process.platform === "win32";
 const npmBin = isWindows ? "npm.cmd" : "npm";
 const npxBin = isWindows ? "npx.cmd" : "npx";
+const nodeBin = isWindows ? "node.exe" : process.execPath;
 
 const records = [];
 const warnings = [];
@@ -242,13 +243,16 @@ function rootAuditStep() {
 }
 
 function e2eStep() {
+  const useDockerBackend = process.env.E2E_START_BACKEND_SERVER === "false";
+
   return {
     name: "Playwright E2E",
-    command: npmBin,
-    args: ["run", "e2e"],
+    command: useDockerBackend ? nodeBin : npmBin,
+    args: useDockerBackend ? ["scripts/run-e2e-docker-backend.mjs"] : ["run", "e2e"],
     cwd: rootDir,
     env: {
-      E2E_START_SERVERS: process.env.E2E_START_SERVERS || "true",
+      E2E_START_SERVERS: useDockerBackend ? "false" : process.env.E2E_START_SERVERS || "true",
+      E2E_START_BACKEND_SERVER: process.env.E2E_START_BACKEND_SERVER,
     },
   };
 }

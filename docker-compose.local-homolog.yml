@@ -72,7 +72,17 @@ services:
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:-}
       NGROK_DOMAIN: ${NGROK_DOMAIN:-}
-    command: ["http", "backend:3001"]
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        if [ -n "$$NGROK_DOMAIN" ]; then
+          case "$$NGROK_DOMAIN" in
+            http://*|https://*) NGROK_ENDPOINT="$$NGROK_DOMAIN" ;;
+            *) NGROK_ENDPOINT="https://$$NGROK_DOMAIN" ;;
+          esac
+          exec ngrok http backend:3001 --url "$$NGROK_ENDPOINT"
+        fi
+        exec ngrok http backend:3001
     ports:
       - "4040:4040"
     depends_on:

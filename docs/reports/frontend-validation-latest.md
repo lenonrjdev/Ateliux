@@ -1,19 +1,19 @@
 # Ateliux frontend Validation Report
 
-- Date: 2026-06-30T22:03:42.773Z
+- Date: 2026-07-01T12:27:08.018Z
 - Mode: frontend
 - Branch: main
-- Commit: a66fd3f
+- Commit: 8b5e6f8
 - Result: passed
 
 ## Steps
 
 | Step | Status | Duration |
 | --- | --- | --- |
-| Frontend typecheck | passed | 6.6s |
-| Frontend lint | passed | 29.8s |
-| Frontend build | passed | 46.8s |
-| Frontend audit | passed | 2.4s |
+| Frontend typecheck | passed | 13.3s |
+| Frontend lint | passed | 44.9s |
+| Frontend build | passed | 53.5s |
+| Frontend audit | passed | 2.3s |
 
 ## Warnings
 

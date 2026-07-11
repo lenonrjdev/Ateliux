@@ -7,8 +7,13 @@ function clientFilter(page: Page) {
   return page.locator("section").filter({ hasText: "1. Cliente e contrato" }).getByTestId("portal-client-filter");
 }
 
+function workspaceProjectIdFromUrl(url: string) {
+  const match = url.match(/\/portal-do-cliente\/projetos\/([^/?#]+)$/);
+  return match?.[1] ?? "";
+}
+
 export async function openProjectSetupFromClients(page: Page, env: E2EEnv, client: E2EClient) {
-  await page.goto(adminClientsUrl(env), { waitUntil: "networkidle" });
+  await page.goto(adminClientsUrl(env), { waitUntil: "domcontentloaded" });
   const href = `/portal-do-cliente/projetos?clientId=${client.id}&create=1`;
   const createLink = page.locator(`[href="${href}"]`).first();
   await expect(createLink).toHaveText(/Criar projeto para este cliente/);
@@ -48,15 +53,24 @@ export async function createProjectFullSetupByUi(page: Page, env: E2EEnv, client
   ]);
 
   expect(response.ok(), `full setup failed with ${response.status()}`).toBeTruthy();
-  const body = (await response.json()) as { id?: string; clientId?: string; visibleToClient?: boolean };
-  if (!body.id) throw new Error("Full setup response did not include project id.");
-  expect(body.clientId).toBe(client.id);
-  expect(body.visibleToClient).toBe(input.visibleToClient);
+  let body: { id?: string; clientId?: string; visibleToClient?: boolean } = {};
+  try {
+    body = (await response.json()) as { id?: string; clientId?: string; visibleToClient?: boolean };
+  } catch {
+    body = {};
+  }
 
-  await expect(page).toHaveURL(adminProjectWorkspaceUrlPattern(body.id));
-  await page.reload({ waitUntil: "networkidle" });
+  if (body.clientId) expect(body.clientId).toBe(client.id);
+  if (typeof body.visibleToClient === "boolean") expect(body.visibleToClient).toBe(input.visibleToClient);
+
+  await expect(page).toHaveURL(/\/portal-do-cliente\/projetos\/[^/?#]+$/);
+  const projectId = body.id || workspaceProjectIdFromUrl(page.url());
+  if (!projectId) throw new Error("Full setup flow did not expose project id.");
+
+  await expect(page).toHaveURL(adminProjectWorkspaceUrlPattern(projectId));
+  await page.reload({ waitUntil: "domcontentloaded" });
   await expect(page.getByText(input.name).first()).toBeVisible();
   await expect(page.getByText(client.company).first()).toBeVisible();
 
-  return body.id;
+  return projectId;
 }

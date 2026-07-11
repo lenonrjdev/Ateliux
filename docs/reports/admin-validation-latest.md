@@ -1,19 +1,19 @@
 # Ateliux admin Validation Report
 
-- Date: 2026-06-30T22:03:29.800Z
+- Date: 2026-07-01T12:26:51.974Z
 - Mode: admin
 - Branch: main
-- Commit: a66fd3f
+- Commit: 8b5e6f8
 - Result: passed
 
 ## Steps
 
 | Step | Status | Duration |
 | --- | --- | --- |
-| Admin typecheck | passed | 4.8s |
-| Admin lint | passed | 21.5s |
-| Admin build | passed | 43.6s |
-| Admin audit | passed | 2.7s |
+| Admin typecheck | passed | 7.4s |
+| Admin lint | passed | 39.7s |
+| Admin build | passed | 47.3s |
+| Admin audit | passed | 3.8s |
 
 ## Warnings
 

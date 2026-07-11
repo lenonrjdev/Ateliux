@@ -1,22 +1,22 @@
 # Ateliux backend Validation Report
 
-- Date: 2026-06-30T22:02:08.682Z
+- Date: 2026-07-01T12:27:20.032Z
 - Mode: backend
 - Branch: main
-- Commit: a66fd3f
+- Commit: 8b5e6f8
 - Result: passed
 
 ## Steps
 
 | Step | Status | Duration |
 | --- | --- | --- |
-| Backend prisma generate | passed | 6.7s |
-| Backend migrate status | passed | 5.9s |
-| Backend typecheck | passed | 13.5s |
-| Backend lint | passed | 17.2s |
-| Backend build | passed | 20.8s |
-| Backend tests | passed | 9.1s |
-| Backend audit | passed | 2.2s |
+| Backend prisma generate | passed | 10.5s |
+| Backend migrate status | passed | 8.1s |
+| Backend typecheck | passed | 27.2s |
+| Backend lint | passed | 39.8s |
+| Backend build | passed | 28.0s |
+| Backend tests | passed | 10.4s |
+| Backend audit | passed | 2.1s |
 
 ## Warnings
 

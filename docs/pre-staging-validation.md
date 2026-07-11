@@ -154,7 +154,7 @@ Antes de validar staging externo definitivo, pode ser usado o caminho local:
 
 ```txt
 Vercel frontend
--> NEXT_PUBLIC_API_BASE_URL=https://<ngrok-host>/api
+-> NEXT_PUBLIC_API_BASE_URL=https://aubrielle-wroth-shae.ngrok-free.dev/api
 -> ngrok
 -> Docker backend em localhost:3054
 ```
@@ -173,7 +173,32 @@ Checklist minimo:
 Relatorio da ultima validacao:
 
 ```txt
+docs/reports/docker-backend-full-container-latest.md
 docs/reports/ngrok-vercel-homolog-latest.md
+```
+
+Enquanto a Vercel depender do backend local por ngrok, nao rode backend fora do Docker. O fluxo operacional e:
+
+```bash
+npm run docker:homolog:start
+```
+
+ou, por etapas:
+
+```bash
+npm run docker:homolog:up
+npm run docker:homolog:migrate
+npm run docker:homolog:bootstrap-admin
+npm run docker:homolog:check-clean
+npm run docker:homolog:ngrok
+```
+
+Para rodar Playwright usando a API Docker em `3054` sem subir backend local:
+
+```powershell
+$env:E2E_BASE_API_URL='http://localhost:3054/api'
+$env:E2E_START_BACKEND_SERVER='false'
+npm run validate:e2e
 ```
 
 ## Protecoes

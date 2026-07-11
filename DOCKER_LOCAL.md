@@ -8,7 +8,7 @@ Este ambiente nao e producao definitiva. Ele depende do PC ligado, Docker rodand
 
 ```txt
 Frontend Vercel
--> NEXT_PUBLIC_API_BASE_URL=https://url-ngrok.ngrok-free.app/api
+-> NEXT_PUBLIC_API_BASE_URL=https://aubrielle-wroth-shae.ngrok-free.dev/api
 -> ngrok
 -> localhost:3054
 -> Docker backend:3001
@@ -64,6 +64,16 @@ CLIENT_APP_URL=http://localhost:3000
 Nao use `COOKIE_DOMAIN=localhost`.
 
 ## Subir Containers
+
+Fluxo completo recomendado:
+
+```bash
+npm run docker:homolog:start
+```
+
+Esse comando valida `.env.docker`, sobe Postgres/Redis/backend, espera `/api/health`, roda migrations com `prisma migrate deploy`, executa bootstrap admin, roda `production:check-clean`, sobe o profile ngrok e mostra a URL final.
+
+Ele nao inicia backend fora do Docker.
 
 Validar compose:
 
@@ -170,24 +180,24 @@ ngrok http 3054
 Na Vercel, configure:
 
 ```txt
-NEXT_PUBLIC_API_BASE_URL=https://sua-url-ngrok.ngrok-free.app/api
+NEXT_PUBLIC_API_BASE_URL=https://aubrielle-wroth-shae.ngrok-free.dev/api
 ```
 
-Depois faca redeploy do frontend na Vercel.
+Depois faca redeploy do frontend e da admin na Vercel, porque `NEXT_PUBLIC_*` entra no build.
 
 Teste:
 
 ```txt
-https://sua-url-ngrok.ngrok-free.app/api/health
+https://aubrielle-wroth-shae.ngrok-free.dev/api/health
 ```
 
 Modo via compose, opcional:
 
 ```bash
-npm run docker:homolog:up:ngrok
+npm run docker:homolog:ngrok
 ```
 
-Esse modo exige `NGROK_AUTHTOKEN` em `.env.docker`.
+Esse modo exige `NGROK_AUTHTOKEN` em `.env.docker`. Se `NGROK_DOMAIN=aubrielle-wroth-shae.ngrok-free.dev` estiver configurado, o container tenta usar esse dominio fixo e encaminha para `backend:3001`.
 
 Consultar a URL publica atual do ngrok:
 
@@ -201,13 +211,21 @@ O profile Docker expoe a API local do ngrok em:
 http://localhost:4040/api/tunnels
 ```
 
-Para dominio reservado do ngrok, use o modo manual:
+Dependendo da imagem atual do ngrok, a API local `4040` pode nao responder; nesse caso `docker:homolog:ngrok:url` usa `NGROK_DOMAIN` como fallback e nao imprime token.
+
+Para dominio reservado do ngrok em modo manual:
 
 ```bash
-ngrok http --url=https://seu-dominio-ngrok.ngrok.app 3054
+ngrok http --url=https://aubrielle-wroth-shae.ngrok-free.dev 3054
 ```
 
 Se a URL gratuita do ngrok mudar, atualize `NEXT_PUBLIC_API_BASE_URL` na Vercel e faca redeploy.
+
+Chamadas automatizadas para dominios free do ngrok podem precisar do header:
+
+```txt
+ngrok-skip-browser-warning: true
+```
 
 ## Vercel -> ngrok
 
@@ -218,7 +236,7 @@ Vercel Dashboard
 -> Project
 -> Settings
 -> Environment Variables
--> NEXT_PUBLIC_API_BASE_URL=https://sua-url-ngrok.ngrok-free.app/api
+-> NEXT_PUBLIC_API_BASE_URL=https://aubrielle-wroth-shae.ngrok-free.dev/api
 -> Redeploy
 ```
 
@@ -226,7 +244,8 @@ Tambem ajuste `.env.docker`:
 
 ```env
 CLIENT_APP_URL=https://seu-frontend.vercel.app
-CORS_ORIGINS=https://seu-frontend.vercel.app
+ADMIN_APP_URL=https://sua-admin.vercel.app
+CORS_ORIGINS=https://seu-frontend.vercel.app,https://sua-admin.vercel.app
 COOKIE_SECURE=true
 COOKIE_SAME_SITE=none
 COOKIE_DOMAIN=

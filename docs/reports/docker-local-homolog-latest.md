@@ -4,6 +4,8 @@
 - Scope: backend + PostgreSQL + Redis em Docker local
 - Result: passed with documented warnings
 
+Atualizacao 2026-07-01: a validacao especifica de backend 100% em container, ngrok fixo, cookies cross-site e login cliente/admin via ngrok foi registrada em `docs/reports/docker-backend-full-container-latest.md`.
+
 ## Files
 
 Created:

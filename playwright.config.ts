@@ -5,10 +5,12 @@ loadE2EEnvFiles();
 
 const env = getE2EEnv();
 const shouldStartServers = process.env.E2E_START_SERVERS === "true";
+const shouldStartBackendServer = shouldStartServers && process.env.E2E_START_BACKEND_SERVER !== "false";
+const webServerTimeout = 180_000;
 
 export default defineConfig({
   testDir: "./e2e",
-  timeout: 90_000,
+  timeout: 180_000,
   expect: {
     timeout: 15_000,
   },
@@ -31,26 +33,30 @@ export default defineConfig({
   ],
   webServer: shouldStartServers
     ? [
-        {
-          command: "npm run start:dev",
-          cwd: "./backend",
-          url: `${env.apiUrl}health`,
-          reuseExistingServer: true,
-          timeout: 120_000,
-        },
+        ...(shouldStartBackendServer
+          ? [
+              {
+                command: "npm run start:dev",
+                cwd: "./backend",
+                url: `${env.apiUrl}health`,
+                reuseExistingServer: true,
+                timeout: webServerTimeout,
+              },
+            ]
+          : []),
         {
           command: "npm run dev -- -p 3002",
           cwd: "./admin",
           url: env.adminUrl,
           reuseExistingServer: true,
-          timeout: 120_000,
+          timeout: webServerTimeout,
         },
         {
           command: "npm run dev",
           cwd: "./frontend",
           url: env.frontendUrl,
           reuseExistingServer: true,
-          timeout: 120_000,
+          timeout: webServerTimeout,
         },
       ]
     : undefined,

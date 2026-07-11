@@ -50,7 +50,7 @@ test.describe.serial("Admin -> Backend -> Portal do Cliente project flow", () =>
     expect(adminProjects.some((project) => project.id === projectId && project.name === visibleProjectName)).toBe(true);
 
     await loginClientInBrowser(page, env, client.email, client.password);
-    await page.goto(clientProjectUrl(env), { waitUntil: "networkidle" });
+    await page.goto(clientProjectUrl(env), { waitUntil: "domcontentloaded" });
 
     await expect(page.getByText(visibleProjectName).first()).toBeVisible();
     await expect(page.getByText(admin.userName).first()).toBeVisible();
@@ -59,7 +59,7 @@ test.describe.serial("Admin -> Backend -> Portal do Cliente project flow", () =>
     await expect(page.getByText("20/08/2026").first()).toBeVisible();
     await expect(page.getByText(`Resumo do cliente para ${visibleProjectName}`).first()).toBeVisible();
 
-    await page.reload({ waitUntil: "networkidle" });
+    await page.reload({ waitUntil: "domcontentloaded" });
     await expect(page.getByText(visibleProjectName).first()).toBeVisible();
   });
 
@@ -80,7 +80,7 @@ test.describe.serial("Admin -> Backend -> Portal do Cliente project flow", () =>
     expect(adminProjects.some((project) => project.id === projectId && project.name === hiddenProjectName)).toBe(true);
 
     await loginClientInBrowser(page, env, client.email, client.password);
-    await page.goto(clientProjectUrl(env), { waitUntil: "networkidle" });
+    await page.goto(clientProjectUrl(env), { waitUntil: "domcontentloaded" });
 
     await expect(page.getByText(visibleProjectName).first()).toBeVisible();
     await expect(page.getByText(hiddenProjectName)).toHaveCount(0);
@@ -136,7 +136,7 @@ test.describe.serial("Admin -> Backend -> Portal do Cliente project flow", () =>
 
   test("tela de clientes nao possui fluxo falso de vinculo", async ({ page }) => {
     await loginAdminInBrowser(page, env);
-    await page.goto(`${env.adminUrl}/clientes`, { waitUntil: "networkidle" });
+    await page.goto(`${env.adminUrl}/clientes`, { waitUntil: "domcontentloaded" });
 
     await expect(page.getByText("Criar projeto para este cliente").first()).toBeVisible();
     await expect(page.getByText("Vincular projeto")).toHaveCount(0);

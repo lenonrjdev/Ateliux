@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   Archive,
   CalendarDays,
@@ -977,7 +976,6 @@ function ClientsView({ data, selectedClientId }: { data: PortalData; selectedCli
 }
 
 export function PortalManagementView({ section = "clients", clientId, createProject = false }: PortalManagementViewProps) {
-  const router = useRouter();
   const initialSection = section === "workspace" ? "clients" : section;
   const lockedClient = Boolean(clientId);
   const [activeSection, setActiveSection] = useState<Exclude<PortalSection, "workspace">>(initialSection);
@@ -1235,7 +1233,7 @@ export function PortalManagementView({ section = "clients", clientId, createProj
       setDraft(emptyDraft);
       if (activeSection === "projects" && createdProjectId) {
         setNotice("Projeto criado na API. Abrindo workspace do projeto...");
-        router.push(`/portal-do-cliente/projetos/${createdProjectId}`);
+        window.location.assign(`/portal-do-cliente/projetos/${createdProjectId}`);
         return;
       }
       setNotice("Registro salvo na API.");

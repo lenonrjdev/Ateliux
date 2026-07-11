@@ -29,6 +29,7 @@ Checklist para liberar o ecossistema Ateliux em producao.
 - [ ] `DATABASE_URL` producao
 - [ ] Homologacao Docker local revisada antes do deploy externo
 - [ ] Relatorio `docs/reports/docker-local-homolog-latest.md` revisado
+- [ ] Relatorio `docs/reports/docker-backend-full-container-latest.md` revisado
 - [ ] Relatorio `docs/reports/ngrok-vercel-homolog-latest.md` revisado quando usar Vercel via ngrok
 - [ ] Banco de pre-producao criado limpo
 - [ ] Backup do banco

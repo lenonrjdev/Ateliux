@@ -16,6 +16,12 @@ export function apiBaseUrl() {
   return (process.env.NEXT_PUBLIC_API_BASE_URL ?? DEFAULT_API_BASE_URL).replace(/\/$/, "");
 }
 
+function applyNgrokHeaders(headers: Headers) {
+  if (apiBaseUrl().includes(".ngrok-free.")) {
+    headers.set("ngrok-skip-browser-warning", "true");
+  }
+}
+
 export async function apiRequest<T>(path: string, init: ApiRequestInit = {}): Promise<T> {
   const response = await request(path, init);
 
@@ -45,6 +51,7 @@ async function request(path: string, init: ApiRequestInit) {
   if (!headers.has("X-Ateliux-Auth-Scope")) {
     headers.set("X-Ateliux-Auth-Scope", "client");
   }
+  applyNgrokHeaders(headers);
 
   return fetch(`${apiBaseUrl()}${path}`, {
     ...requestInit,
@@ -71,8 +78,12 @@ function shouldTryRefresh(path: string, init: ApiRequestInit) {
 }
 
 function refreshAuthSession() {
+  const headers = new Headers();
+  applyNgrokHeaders(headers);
+
   refreshPromise ??= fetch(`${apiBaseUrl()}${AUTH_REFRESH_PATH}`, {
     method: "POST",
+    headers,
     credentials: "include",
   })
     .then((response) => response.ok)

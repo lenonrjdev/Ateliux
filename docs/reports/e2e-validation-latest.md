@@ -1,16 +1,16 @@
 # Ateliux e2e Validation Report
 
-- Date: 2026-06-30T22:05:01.063Z
+- Date: 2026-07-01T14:03:08.570Z
 - Mode: e2e
 - Branch: main
-- Commit: a66fd3f
+- Commit: 8b5e6f8
 - Result: passed
 
 ## Steps
 
 | Step | Status | Duration |
 | --- | --- | --- |
-| Playwright E2E | passed | 66.4s |
+| Playwright E2E | passed | 78.5s |
 
 ## Warnings
 

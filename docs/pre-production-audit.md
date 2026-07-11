@@ -26,6 +26,7 @@ Auditoria operacional antes de colocar o ecossistema Ateliux em staging/producao
 - Relatorios de validacao sao gerados em `docs/reports/*-validation-latest.md` sem valores de `.env`.
 - Banco limpo de validacao pre-producao foi criado em ambiente local controlado, recebeu migrations via `migrate deploy`, bootstrap admin, `production:check-clean`, `validate:pre-production`, E2E e health check. Relatorio: `docs/reports/preproduction-database-validation-latest.md`.
 - Homologacao Docker local criada para backend + PostgreSQL + Redis, expondo a API em `http://localhost:3054/api` e documentando uso com Vercel/ngrok. Relatorio: `docs/reports/docker-local-homolog-latest.md`.
+- Homologacao do backend 100% em container validada em 2026-07-01: Dockerfile de producao com `node dist/src/main.js`, Postgres/Redis internos, migrations/bootstrap/check-clean no container, health local/ngrok e login cliente/admin via ngrok. Relatorio: `docs/reports/docker-backend-full-container-latest.md`.
 - Caminho Docker -> ngrok -> backend validado com health publico, CORS configurado, cookies httpOnly cross-site, login cliente/admin e fluxo projeto visivel/invisivel. Vercel real segue pendente de dominio/redeploy no provedor. Relatorio: `docs/reports/ngrok-vercel-homolog-latest.md`.
 
 ## Auditoria de staging/deploy - 2026-06-27

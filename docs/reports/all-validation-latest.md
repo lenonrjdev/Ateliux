@@ -1,32 +1,32 @@
 # Ateliux all Validation Report
 
-- Date: 2026-06-30T23:26:36.789Z
+- Date: 2026-07-01T14:00:36.548Z
 - Mode: all
 - Branch: main
-- Commit: a66fd3f
+- Commit: 8b5e6f8
 - Result: passed
 
 ## Steps
 
 | Step | Status | Duration |
 | --- | --- | --- |
-| Backend prisma generate | passed | 5.0s |
-| Backend migrate status | passed | 4.5s |
-| Backend typecheck | passed | 10.3s |
-| Backend lint | passed | 14.6s |
-| Backend build | passed | 15.5s |
-| Backend tests | passed | 7.5s |
-| Backend audit | passed | 1.9s |
-| Admin typecheck | passed | 3.9s |
-| Admin lint | passed | 24.2s |
-| Admin build | passed | 22.4s |
-| Admin audit | passed | 1.9s |
-| Frontend typecheck | passed | 5.6s |
-| Frontend lint | passed | 19.7s |
-| Frontend build | passed | 30.3s |
-| Frontend audit | passed | 2.0s |
-| Root audit | passed | 1.8s |
-| Playwright E2E | passed | 59.4s |
+| Backend prisma generate | passed | 5.9s |
+| Backend migrate status | passed | 5.9s |
+| Backend typecheck | passed | 15.1s |
+| Backend lint | passed | 20.4s |
+| Backend build | passed | 22.4s |
+| Backend tests | passed | 12.8s |
+| Backend audit | passed | 2.7s |
+| Admin typecheck | passed | 4.8s |
+| Admin lint | passed | 19.6s |
+| Admin build | passed | 31.1s |
+| Admin audit | passed | 3.0s |
+| Frontend typecheck | passed | 7.3s |
+| Frontend lint | passed | 26.3s |
+| Frontend build | passed | 43.3s |
+| Frontend audit | passed | 3.0s |
+| Root audit | passed | 2.5s |
+| Playwright E2E | passed | 73.4s |
 
 ## Warnings
 
